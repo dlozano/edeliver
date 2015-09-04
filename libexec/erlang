@@ -166,7 +166,7 @@ erlang_generate_release() {
       $RELX_CMD release $SILENCE
     elif [ \"$RELEASE_CMD\" = \"mix\" ]; then
       echo \"using mix to generate release\" $SILENCE
-      MIX_ENV=prod LINK_SYS_CONFIG=\"$LINK_SYS_CONFIG\" LINK_VM_ARGS=\"$LINK_VM_ARGS\" $MIX_CMD release $SILENCE
+      MIX_ENV=$TARGET_MIX_ENV LINK_SYS_CONFIG=\"$LINK_SYS_CONFIG\" LINK_VM_ARGS=\"$LINK_VM_ARGS\" $MIX_CMD release $SILENCE
     fi
 
   "
@@ -976,7 +976,7 @@ __detect_exrm_version() {
       [ -f ~/.profile ] && source ~/.profile
       set -e
       cd $BUILD_AT $SILENCE
-      MIX_ENV=prod mix deps | grep exrm | grep locked | cut -d' ' -f5 | tr '.' ' '
+      MIX_ENV=$TARGET_MIX_ENV mix deps | grep exrm | grep locked | cut -d' ' -f5 | tr '.' ' '
     ")
     if ! [[ "$EXRM_VERSION_MAJOR" =~ ^[0-9]+$ || "$EXRM_VERSION_MINOR" =~ ^[0-9]+$ ]]; then
       error "\nFailed to detect exrm version.
